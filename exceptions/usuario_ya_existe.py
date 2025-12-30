@@ -1,0 +1,2 @@
+class UsuarioYaExiste(Exception):
+    pass

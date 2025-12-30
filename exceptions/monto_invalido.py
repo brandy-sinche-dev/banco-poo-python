@@ -1,0 +1,2 @@
+class MontoInvalido(Exception):
+    pass
