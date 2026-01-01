@@ -4,6 +4,7 @@ from models.usuario import Usuario
 from models.cuenta import Cuenta
 from models.movimiento import Movimiento
 from exceptions.monto_invalido import MontoInvalido
+from exceptions.usuario_ya_existe import UsuarioYaExiste
 
 ARCHIVO = "data/banco.json"
 
@@ -37,6 +38,29 @@ def guardar_banco(banco):
         json.dump(data, f, indent=4)
 
 banco = cargar_banco()
+
+while True:
+    print("1. Ingresar con dni\n2. Registrarse")
+    try:
+        opc = int(input("Ingrese un numero:"))
+    except ValueError:
+        continue
+    
+    if opc == 1:
+        break
+    elif opc == 2:
+        dni = input("Ingrese su dni:")
+        nombre = input("Ingrese su nombre:")
+        try:
+            banco.agregar_usuario(dni,nombre)
+            guardar_banco(banco)
+        except UsuarioYaExiste as e:
+            print(e)
+            continue
+        print("SE REGISTRO CORRECTAMENTE")
+    else:
+        print("INGRESE UNA OPCION VALIDA")
+        continue
 
 while True:
     dni = input("Ingrese DNI: ")
